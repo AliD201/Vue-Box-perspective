@@ -1,0 +1,94 @@
+<!DOCTYPE>
+<html>
+
+<head>
+  <title>CSS3 Perspective Playground</title>
+  <link rel="stylesheet" type="text/css" href="main.css" />
+</head>
+
+<body>
+  <div id="app">
+    <h2>CSS3 Perspective Playground</h2>
+    <main>
+      <section class="settings">
+        <div class="settings-container">
+          <label>perspective: {{perspective}} px;</label>
+          <input type="range" min="0" max="999" v-model="perspective"/>
+
+          <label>rotateX: {{rotateX}}deg; </label>
+          <input type="range" min="-180" max="180" v-model="rotateX" />
+
+          <label>roteteY: {{rotateY}}deg; </label>
+          <input type="range" min="-180" max="180" v-model="rotateY"  />
+
+          <label>rotateZ: {{rotateZ}}deg; </label>
+          <input type="range" min="-180" max="180" v-model="rotateZ" />
+
+          <button type="button" @click.prevent="reset">Reset</button>
+          <button type="button" @click.prevent="copy">Copy</button>
+        </div>
+      </section>
+      <section class="output">
+        <div class="box-container">
+          <div class="box" :style="box" ref="boxStyle"></div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <css-doodle>
+    :doodle { 
+      @grid: 300 / 100vw 40vmin; 
+      padding: 1em 1em 0; 
+      overflow: hidden;
+      position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    z-index: -1;
+      background: linear-gradient(
+        rgba(63, 81, 181, .11), 
+        #673AB7
+      );
+    }
+  
+    align-self: flex-end;
+    --h: @r(10, 80, .1);
+    @random(.1) {
+      --h: @r(85, 102, .1);
+    }
+  
+    @size: 1px calc(var(--h) * 1%);
+    background: linear-gradient(
+      transparent,
+      rgba(255, 255, 255, .4),
+      transparent
+    );
+    background-size: .5px 100%;
+    transform-origin: center 100%;
+    transform:
+      translate(@r(-2vmin, 2vmin, .01), 10%)
+      rotate(@r(-2deg, 2deg, .01));
+    
+    :after {
+      content: '';
+      position: absolute;
+      top: 0;
+      @size: calc(2px * var(--h));
+      transform: translateY(-50%) scale(.14);
+      background: radial-gradient(
+        @p(#ff03929e, #673ab752, #fffa) @r(40%), 
+        transparent 50%
+      )
+      50% 50% / @r(100%) @lr()
+      no-repeat;
+    } 
+
+  </css-doodle>
+
+  <script src="https://unpkg.com/css-doodle@0.6.1/css-doodle.min.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
